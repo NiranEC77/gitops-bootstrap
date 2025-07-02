@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: music-store-1
+  namespace: argocd
+  labels:
+    region: east   # <- label used for filtering
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/NiranEC77/exmaple-music-store-1
+    targetRevision: main
+    path: deploy      # <- adjust if your manifests are in a different path
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: music-store-1
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
